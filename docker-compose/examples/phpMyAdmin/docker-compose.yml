@@ -1,0 +1,24 @@
+services:
+#  db:
+#    image: mariadb:10.11
+#    restart: always
+#    environment:
+#      MYSQL_ROOT_PASSWORD: changeme
+#    volumes:
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: web-tools-phpmyadmin
+    restart: always
+    ports:
+      #- 8080:80
+      - 11415:80
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_ABSOLUTE_URI=https://sub-domain.domain.tld
+      - PMA_SOCKET=/tmp/mysql.sock
+    volumes:
+      - ./conf.d:/etc/phpmyadmin/conf.d
+      - ./sessions:/sessions:rw
+      - ./themes:/www/themes:rw
+      - /run/mysqld/mysqld10.sock:/tmp/mysql.sock
